@@ -1,0 +1,49 @@
+.profileInfo {
+  display: flex;
+  padding: 10px;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 10px;
+}
+
+.profileInfo h2 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.userData {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+}
+
+.userDetails {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-evenly;
+  padding: 10px;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+}
+
+.userDetails p {
+  font-size: 16px;
+  margin: 0;
+  color: #333;
+  font-weight: bold;
+}
+
+.userData span {
+  font-size: 14px;
+  color: #777;
+  font-weight: 600;
+}
+
+.bio {
+  font-size: 16px;
+  color: #333;
+  padding: 2rem;
+}

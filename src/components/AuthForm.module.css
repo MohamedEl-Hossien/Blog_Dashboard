@@ -1,0 +1,93 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 2rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  margin: 4rem auto;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  max-width: 40rem;
+}
+
+.form h2 {
+  font-size: 2rem;
+  margin: 0 0 0.5rem 0;
+  color: #333;
+}
+
+.control {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.control label {
+  font-size: 1.2rem;
+  color: #555;
+  text-align: left;
+  margin-left: 0.5rem;
+}
+
+.control input,
+.control textarea {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.control input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.control button {
+  padding: 0.5rem 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  width: 35%;
+  margin: 1rem auto;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.actions a {
+  color: #007bff;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.actions a:hover {
+  text-decoration: underline;
+}
+
+.actions button {
+  padding: 0.5rem 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.loading {
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.error {
+  color: red;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  text-align: center;
+}

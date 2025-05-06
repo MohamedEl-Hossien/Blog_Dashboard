@@ -1,0 +1,100 @@
+.postsContainer {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.post {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background-color: #f9f9f9;
+  color: black;
+  width: calc(calc(100% - 2rem) / 3);
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  text-decoration: none;
+}
+
+.post:hover {
+  background-color: #f1f1f1;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.postHeader {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem;
+  border-bottom: 1px solid #ddd;
+  flex-direction: column;
+  background-color: #282c34;
+  border-radius: 5px;
+}
+
+.postHeader h2 {
+  font-size: 1.2rem;
+  color: #ddd;
+  margin: 0.5rem 0 1rem;
+  word-wrap: break-word;
+}
+
+.author {
+  text-align: left;
+  font-size: 1rem;
+  color: #ddd;
+  margin: 0;
+  word-wrap: break-word;
+}
+
+.date {
+  text-align: left;
+  font-size: 0.8rem;
+  color: #777;
+  margin: 0;
+  word-wrap: break-word;
+}
+
+.content {
+  font-size: 1rem;
+  color: #333;
+  margin-top: 0.5rem;
+  display: flex;
+  min-height: 6rem;
+  padding: 0.5rem;
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.actions button,
+.actions a {
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+.actions a.edit {
+  background-color: #007bff;
+  color: white;
+}
+.actions button.delete {
+  background-color: #dc3545;
+  color: white;
+}
+
+.emptyPosts {
+  font-size: 2rem;
+  color: #555;
+  text-align: center;
+}
