@@ -1,7 +1,7 @@
 .postsContainer {
-  display: flex;
+  display: grid;
   gap: 1rem;
-  flex-wrap: wrap;
+  grid-template-columns: repeat(3, 1fr);
 }
 
 .post {
@@ -11,7 +11,6 @@
   gap: 1rem;
   background-color: #f9f9f9;
   color: black;
-  width: calc(calc(100% - 2rem) / 3);
   border: 1px solid #ddd;
   border-radius: 5px;
   padding: 10px;
@@ -29,7 +28,7 @@
   padding: 0.5rem;
   border-bottom: 1px solid #ddd;
   flex-direction: column;
-  background-color: #282c34;
+  background-color: #265d65;
   border-radius: 5px;
 }
 
@@ -50,8 +49,8 @@
 
 .date {
   text-align: left;
-  font-size: 0.8rem;
-  color: #777;
+  font-size: 1rem;
+  color: #06292c;
   margin: 0;
   word-wrap: break-word;
 }
@@ -85,7 +84,7 @@
 }
 
 .actions a.edit {
-  background-color: #007bff;
+  background-color: #265d65;
   color: white;
 }
 .actions button.delete {
@@ -97,4 +96,16 @@
   font-size: 2rem;
   color: #555;
   text-align: center;
+}
+
+@media (max-width: 426px) {
+  .postsContainer {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 426px) and (max-width: 767px) {
+  .postsContainer {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }

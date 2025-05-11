@@ -17,8 +17,8 @@
 .form .control label {
   font-weight: bold;
   font-size: 1.2rem;
-  color: #333;
-  width: 15%;
+  color: #10282b;
+  width: 16%;
   text-align: left;
 }
 
@@ -29,11 +29,12 @@
   border-radius: 5px;
   font-size: 1rem;
   width: 100%;
+  background-color: #10282b;
 }
 
 .form .control input:focus,
 .form .control textarea:focus {
-  border-color: #007bff;
+  border-color: #265d65;
   outline: none;
 }
 

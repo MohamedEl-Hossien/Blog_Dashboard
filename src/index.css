@@ -5,7 +5,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background: linear-gradient(#1c2529, #06292c);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -15,8 +15,13 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  min-height: 100vh;
 }
 
 body {
+  box-sizing: border-box;
+}
+
+* {
   box-sizing: border-box;
 }

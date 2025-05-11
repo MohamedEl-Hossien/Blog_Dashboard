@@ -1,15 +1,28 @@
 import { useMutation } from "@tanstack/react-query";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { authActions } from "../store/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../firebase/auth.js";
 import classes from "./MainNav.module.css";
 import ErrorBlock from "./ErrorBlock.jsx";
+import { useEffect, useState } from "react";
 
 export default function MainNav() {
   const navigate = useNavigate();
   const isLoggedIn = useSelector((state) => state.auth.isAuthenticated);
   const dispatch = useDispatch();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const location = useLocation(); // Detect route changes
+
+  // Hide navbar when location changes
+  useEffect(() => {
+    setIsOpen(false);
+  }, [location]);
+
+  function handleToggleNav() {
+    setIsOpen((prevState) => !prevState);
+  }
 
   const { mutate, isError, error } = useMutation({
     mutationFn: logOut,
@@ -38,7 +51,10 @@ export default function MainNav() {
   return (
     <header className={classes.header}>
       <nav className={classes.nav}>
-        <ul>
+        <div className={classes.menuIcon} onClick={handleToggleNav}>
+          &#9776;
+        </div>
+        <ul className={`${classes.navLinks}  ${isOpen ? classes.open : " "}`}>
           <li>
             <NavLink
               to="/"

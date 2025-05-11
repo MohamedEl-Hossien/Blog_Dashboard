@@ -24,13 +24,19 @@
   background-color: #f0f0f0;
   border-radius: 5px;
   transition: background-color 0.3s ease, color 0.3s ease;
+  cursor: pointer;
 }
 
 .list a:hover,
 .list a:active,
 .list a.active {
-  background-color: #007bff;
+  background-color: #265d65;
   color: white;
-  cursor: pointer;
   text-decoration: none;
+}
+
+@media (max-width: 426px) {
+  .list a {
+    padding: 0.5rem;
+  }
 }

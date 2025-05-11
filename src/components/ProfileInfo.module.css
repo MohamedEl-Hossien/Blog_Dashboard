@@ -25,20 +25,21 @@
   gap: 1rem;
   justify-content: space-evenly;
   padding: 10px;
-  background-color: #f1f1f1;
+  background-color: #265d65;
   border-radius: 5px;
+  flex-wrap: wrap;
 }
 
 .userDetails p {
   font-size: 16px;
   margin: 0;
-  color: #333;
+  color: #f9f9f9;
   font-weight: bold;
 }
 
 .userData span {
   font-size: 14px;
-  color: #777;
+  color: #dddbdf;
   font-weight: 600;
 }
 
@@ -46,4 +47,5 @@
   font-size: 16px;
   color: #333;
   padding: 2rem;
+  overflow-wrap: break-word;
 }

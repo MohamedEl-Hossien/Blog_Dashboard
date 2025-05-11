@@ -1,46 +1,44 @@
-.header {
-  background-color: #282c34;
-  padding: 20px;
-  color: white;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.header h1 {
-  font-size: 24px;
-  margin: 0;
-}
-
 .nav {
-  display: flex;
-  gap: 20px;
+  position: relative;
+  background: linear-gradient(135deg, #265d65, #1b4248);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  text-align: left;
 }
 
-.nav ul {
+.menuIcon {
+  font-size: 1.5rem;
+  display: none;
+  cursor: pointer;
+}
+
+.navLinks {
   list-style: none;
   padding: 0;
   margin: 0;
   display: flex;
   gap: 20px;
   align-items: center;
+  padding: 1rem 0;
 }
 
 .nav a {
-  color: white;
+  color: #f9f9f9;
   text-decoration: none;
   font-size: 18px;
-}
-
-.nav a:hover {
-  text-decoration: underline;
-}
-
-.nav a.active {
   font-weight: bold;
 }
 
-.nav button {
+.nav a:hover {
+  color: #06292c;
+}
+
+.nav a.active {
+  color: #06292c;
+  font-weight: bold;
+}
+
+/* .nav button {
   background-color: #61dafb;
   border: none;
   padding: 10px 20px;
@@ -50,4 +48,49 @@
 }
 .nav button:hover {
   background-color: #21a1f1;
+} */
+
+.nav button {
+  background: linear-gradient(135deg, #dc3545, #a72130);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.nav button:hover {
+  background: linear-gradient(135deg, #b72a38, #871822);
+}
+
+@media (max-width: 768px) {
+  .nav {
+    background: none;
+    background-color: #1c454b;
+  }
+
+  .menuIcon {
+    display: block;
+  }
+
+  .navLinks {
+    visibility: hidden;
+    background-color: #1c454b;
+    flex-direction: column;
+    position: absolute;
+    top: 90%;
+    left: 0;
+    width: 100%;
+    border-radius: 0 0 0.5rem 0.5rem;
+    opacity: 0;
+    transition: opacity 0.1s ease, visibility 0.3s ease;
+    padding-top: 0;
+  }
+
+  .navLinks.open {
+    display: flex;
+    opacity: 1;
+    visibility: visible;
+  }
 }

@@ -13,7 +13,7 @@
 .form h2 {
   font-size: 2rem;
   margin: 0 0 0.5rem 0;
-  color: #333;
+  color: #10282b;
 }
 
 .control {
@@ -24,7 +24,7 @@
 
 .control label {
   font-size: 1.2rem;
-  color: #555;
+  color: #10282b;
   text-align: left;
   margin-left: 0.5rem;
 }
@@ -35,10 +35,11 @@
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 1rem;
+  background-color: #10282b;
 }
 
 .control input:focus {
-  border-color: #007bff;
+  border-color: #265d65;
   outline: none;
 }
 
@@ -58,21 +59,23 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 1rem;
 }
 
 .actions a {
-  color: #007bff;
+  color: #265d65;
   text-decoration: none;
   font-size: 1rem;
+  font-weight: bold;
 }
 
 .actions a:hover {
-  text-decoration: underline;
+  color: #10282b;
 }
 
 .actions button {
   padding: 0.5rem 1rem;
-  background-color: #007bff;
+  background-color: #265d65;
   color: white;
   border: none;
   border-radius: 4px;
