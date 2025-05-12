@@ -75,3 +75,11 @@
 .form .actions button:hover {
   opacity: 0.8;
 }
+
+.controlError {
+  color: #c72436;
+  font-size: 1rem;
+  font-weight: bold;
+  padding-bottom: 0.5rem;
+  margin: 0;
+}

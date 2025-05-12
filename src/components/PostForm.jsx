@@ -1,14 +1,19 @@
+import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
-import classes from "./PostForm.module.css";
 import { useSelector } from "react-redux";
 import { createNewPost, updatePost, queryClient } from "../util/requests.js";
+import { postValidation } from "../util/validation.js";
 import LoadingIndicator from "./LoadingIndicator.jsx";
 import ErrorBlock from "./ErrorBlock.jsx";
+import classes from "./PostForm.module.css";
 
 export default function PostForm({ method, post }) {
+  const [errors, setErrors] = useState({});
+
   const currentUser = useSelector((state) => state.auth.currentUser);
   const userId = currentUser.uid;
+
   const param = useParams();
   const postId = param.postId;
 
@@ -16,10 +21,6 @@ export default function PostForm({ method, post }) {
 
   const today = new Date();
   const formattedDate = today.toISOString().split("T")[0]; // "YYYY-MM-DD"
-
-  function cancelHandler() {
-    navigate("/dashboard");
-  }
 
   const createNewPostMutation = useMutation({
     mutationFn: createNewPost,
@@ -37,26 +38,30 @@ export default function PostForm({ method, post }) {
     },
   });
 
-  function handleSubmitNew(event) {
+  function handleSubmitPost(event, method) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData.entries());
-    createNewPostMutation.mutate({ userId, data });
+    const validationErrors = postValidation(data);
+    if (Object.keys(validationErrors).length === 0) {
+      setErrors({});
+      if (method === "new") {
+        createNewPostMutation.mutate({ userId, data });
+      } else {
+        updatePostMutation.mutate({ userId, postId, data });
+      }
+    } else {
+      setErrors(validationErrors);
+    }
   }
 
-  function handleSubmitUpdate(event) {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData.entries());
-    updatePostMutation.mutate({ userId, postId, data });
+  function cancelHandler() {
+    navigate("/dashboard");
   }
 
   return (
     <>
-      <form
-        className={classes.form}
-        onSubmit={method === "new" ? handleSubmitNew : handleSubmitUpdate}
-      >
+      <form className={classes.form} onSubmit={handleSubmitPost}>
         <div className={classes.control}>
           <label htmlFor="title">Title:</label>
           <input
@@ -65,10 +70,12 @@ export default function PostForm({ method, post }) {
             name="title"
             required
             defaultValue={post ? post.title : ""}
-            minLength={4}
             maxLength={50}
           />
         </div>
+        {errors && errors.title && (
+          <p className={classes.controlError}>{errors.title}</p>
+        )}
         <div className={classes.control}>
           <label htmlFor="author">Author:</label>
           <input
@@ -78,10 +85,12 @@ export default function PostForm({ method, post }) {
             required
             defaultValue={post ? post.author : ""}
             readOnly={!method}
-            minLength={6}
             maxLength={25}
           />
         </div>
+        {errors && errors.author && (
+          <p className={classes.controlError}>{errors.author}</p>
+        )}
         <div className={classes.control}>
           <label htmlFor="date">Date:</label>
           <input
@@ -101,10 +110,12 @@ export default function PostForm({ method, post }) {
             rows={5}
             required
             defaultValue={post ? post.content : ""}
-            minLength={4}
             maxLength={500}
           ></textarea>
         </div>
+        {errors && errors.content && (
+          <p className={classes.controlError}>{errors.content}</p>
+        )}
         <div className={classes.actions}>
           <button type="submit" className={classes.submit}>
             {method === "new" ? "Create Post" : "Update Post"}
@@ -118,9 +129,11 @@ export default function PostForm({ method, post }) {
           </button>
         </div>
       </form>
-      {createNewPostMutation.isLoading && (
+      {(createNewPostMutation.isLoading || updatePostMutation.isLoading) && (
         <>
-          <p className={classes.loading}> Creating Post......</p>
+          <p className={classes.loading}>
+            {method === "new" ? "Creating Post......" : "Updating post......"}{" "}
+          </p>
           <LoadingIndicator />
         </>
       )}
@@ -128,21 +141,15 @@ export default function PostForm({ method, post }) {
         <ErrorBlock
           title="An error occurred"
           message={
-            createNewPostMutation.error.info?.message || "Failed to create post"
+            createNewPostMutation.error?.message || "Failed to create post"
           }
         ></ErrorBlock>
-      )}
-      {updatePostMutation.isLoading && (
-        <>
-          <p className={classes.loading}>Updating post...</p>
-          <LoadingIndicator />
-        </>
       )}
       {updatePostMutation.isError && (
         <ErrorBlock
           title="An error occurred"
           message={
-            createNewPostMutation.error.info?.message || "Failed to update post"
+            createNewPostMutation.error?.message || "Failed to update post"
           }
         ></ErrorBlock>
       )}

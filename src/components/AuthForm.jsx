@@ -1,15 +1,17 @@
 import classes from "./AuthForm.module.css";
 import { useSearchParams, Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { logIn, signUp } from "../firebase/auth.js";
-// import { useRef } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { storeUserData } from "../util/requests.js";
+import { signUpValidation, signInValidation } from "../util/validation.js";
+import { ERROR_MESSAGES } from "../util/errorsMessages.js";
 import LoadingIndicator from "./LoadingIndicator.jsx";
+import Input from "./Input.jsx";
 
 export default function AuthForm() {
   const navigate = useNavigate();
-  // const imagePicker = useRef();
-
+  const [errors, setErrors] = useState({});
   const [searchParams] = useSearchParams();
   const isLogin = searchParams.get("mode") === "login";
 
@@ -37,67 +39,74 @@ export default function AuthForm() {
     },
   });
 
-  const handleLogin = async (event) => {
+  const handleAuth = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData.entries());
-    signInMutation.mutate({ data });
-  };
 
-  const handleSignUp = async (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData.entries());
-    signUpMutation.mutate({ data });
-  };
+    let validationErrors;
+    if (isLogin) {
+      validationErrors = signInValidation(data);
+    } else {
+      validationErrors = signUpValidation(data);
+    }
 
-  // const hadleUploadImage = async (event) => {
-  //   event.preventDefault();
-  //   imagePicker.current.click();
-  // };
+    if (Object.keys(validationErrors).length === 0) {
+      setErrors({});
+      if (isLogin) {
+        signInMutation.mutate({ data });
+      } else {
+        signUpMutation.mutate({ data });
+      }
+    } else {
+      setErrors(validationErrors);
+    }
+  };
 
   return (
     <>
-      <form
-        onSubmit={isLogin ? handleLogin : handleSignUp}
-        className={classes.form}
-      >
+      <form onSubmit={handleAuth} className={classes.form}>
         <h2>{isLogin ? "Log in" : "Register"}</h2>
-        <div className={classes.control}>
-          <label htmlFor="email">Email</label>
-          <input id="email" type="email" name="email" required />
-        </div>
-        <div className={classes.control}>
-          <label htmlFor="image">Password</label>
-          <input id="password" type="password" name="password" required />
-        </div>
+        <Input
+          label="Email"
+          name="email"
+          type="email"
+          error={errors?.email ?? null}
+        />
+        <Input
+          label="Password"
+          name="password"
+          type="password"
+          error={errors?.password ?? null}
+        />
         {!isLogin && (
           <>
-            <div className={classes.control}>
-              <label htmlFor="name">User Name</label>
-              <input id="name" type="text" name="name" required />
-            </div>
-            <div className={classes.control}>
-              <label htmlFor="location">Location</label>
-              <input id="location" type="text" name="location" required />
-            </div>
-            <div className={classes.control}>
-              <label htmlFor="position">Position</label>
-              <input id="position" type="text" name="position" required />
-            </div>
-            <div className={classes.control}>
-              <label htmlFor="bio">Bio</label>
-              <textarea id="bio" name="bio" rows={5} required></textarea>
-            </div>
-            {/* <div className={classes.control}>
-            <input
-              type="file"
-              name="image"
-              ref={imagePicker}
-              style={{ display: "none" }}
+            <Input
+              label="User Name"
+              name="name"
+              type="text"
+              error={errors?.name ?? null}
             />
-            <button onClick={hadleUploadImage}>Upload Image</button>
-          </div> */}
+            <Input
+              label="Location"
+              name="location"
+              type="text"
+              error={errors?.location ?? null}
+            />
+            <Input
+              label="Position"
+              name="position"
+              type="text"
+              error={errors?.position ?? null}
+            />
+            <Input
+              label="Bio"
+              name="bio"
+              type="text"
+              textArea
+              rows={5}
+              error={errors?.name ?? null}
+            />
           </>
         )}
         <div className={classes.actions}>
@@ -113,28 +122,26 @@ export default function AuthForm() {
           </button>
         </div>
       </form>
-      {signInMutation.isPending && (
+      {(signInMutation.isPending || signUpMutation.isPending) && (
         <>
-          <p className={classes.loading}> Sign In......</p>
+          <p className={classes.loading}>
+            {isLogin ? "Sign In......" : "Sign Up......"}{" "}
+          </p>
           <LoadingIndicator />
         </>
       )}
       {signInMutation.isError && (
         <p className={classes.error}>
-          {signInMutation.error.info?.message ||
-            "Failed to login. Please check your inputs and try again later."}
+          {signInMutation.error.code
+            ? ERROR_MESSAGES[signInMutation.error.code]
+            : "Failed to login. An unknown error occurred."}
         </p>
-      )}
-      {signUpMutation.isPending && (
-        <>
-          <p className={classes.loading}> Sign Up......</p>
-          <LoadingIndicator />
-        </>
       )}
       {signUpMutation.isError && (
         <p className={classes.error}>
-          {signUpMutation.error.info?.message ||
-            "Failed to register. Please check your inputs and try again later."}
+          {signUpMutation.error.code
+            ? ERROR_MESSAGES[signUpMutation.error.code]
+            : "Failed to register. An unknown error occurred."}
         </p>
       )}
     </>
