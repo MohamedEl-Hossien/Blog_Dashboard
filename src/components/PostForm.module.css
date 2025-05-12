@@ -32,6 +32,18 @@
   background-color: #10282b;
 }
 
+.form .control input[readonly] {
+  color: #333;
+  cursor: not-allowed;
+  background: linear-gradient(to right, #e0e0e0, #f8f8f8);
+  font-style: italic;
+  opacity: 0.7;
+}
+
+.form .control input[readonly]:focus {
+  border: 1px solid #ccc;
+}
+
 .form .control input:focus,
 .form .control textarea:focus {
   border-color: #265d65;

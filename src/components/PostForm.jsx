@@ -14,6 +14,9 @@ export default function PostForm({ method, post }) {
 
   const navigate = useNavigate();
 
+  const today = new Date();
+  const formattedDate = today.toISOString().split("T")[0]; // "YYYY-MM-DD"
+
   function cancelHandler() {
     navigate("/dashboard");
   }
@@ -62,6 +65,8 @@ export default function PostForm({ method, post }) {
             name="title"
             required
             defaultValue={post ? post.title : ""}
+            minLength={4}
+            maxLength={50}
           />
         </div>
         <div className={classes.control}>
@@ -72,6 +77,9 @@ export default function PostForm({ method, post }) {
             name="author"
             required
             defaultValue={post ? post.author : ""}
+            readOnly={!method}
+            minLength={6}
+            maxLength={25}
           />
         </div>
         <div className={classes.control}>
@@ -81,7 +89,8 @@ export default function PostForm({ method, post }) {
             id="date"
             name="date"
             required
-            defaultValue={post ? post.date : ""}
+            value={method === "new" ? formattedDate : post ? post.date : ""}
+            readOnly
           />
         </div>
         <div className={classes.control}>
@@ -92,6 +101,8 @@ export default function PostForm({ method, post }) {
             rows={5}
             required
             defaultValue={post ? post.content : ""}
+            minLength={4}
+            maxLength={500}
           ></textarea>
         </div>
         <div className={classes.actions}>

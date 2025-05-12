@@ -19,7 +19,9 @@ export default function PostsList({ posts, from }) {
 
   function handleDeletePost(postId) {
     const userId = currentUser.uid;
-    const response = window.confirm("Are you Sure To Delte This Post");
+    const response = window.confirm(
+      "Are you sure you want to delete this post?"
+    );
     if (response) {
       mutate({ userId, postId });
     }
