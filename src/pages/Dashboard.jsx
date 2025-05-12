@@ -36,6 +36,10 @@ export default function Dashboard() {
     );
   }
 
+  if (data) {
+    data.sort((a, b) => new Date(b.date) - new Date(a.date));
+  }
+
   return (
     <div>
       <h1>Dashboard</h1>

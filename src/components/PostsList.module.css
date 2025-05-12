@@ -20,6 +20,8 @@
 .post:hover {
   background-color: #f1f1f1;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transform: scale(1.04);
+  transition: transform 0.3s ease;
 }
 
 .postHeader {
@@ -113,7 +115,7 @@
   }
 }
 
-@media (min-width: 426px) and (max-width: 767px) {
+@media (min-width: 426px) and (max-width: 768px) {
   .postsContainer {
     grid-template-columns: repeat(2, 1fr);
   }
